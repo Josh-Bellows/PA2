@@ -50,52 +50,51 @@ public class BellowsGenzer006PA2 {
             quarterlySales = 0;
             salesRepCtr++;
 
-            promptSalesRep();
+            promptSalesRep(noSalesReps);
+            promptNoQtrs();
+            while (qtrCounter <= noOfQtrs) {
 
+                monthCounter = 1;
+                qtrChoice = chooseQtr();
+                while (true) {
+                    determineMonthNo(monthCounter);
+                    promptSalesRevenue();
+                    //Adding sales to quarter total
+                    quarterlySales += salesRevenue;
+                    ++monthCounter;
+                }
+                annualSales += quarterlySales;
+                ++qtrCounter;
+                printSalesRepRevReport();
+                percOfTargetRep = quarterlySales / (projectedSales / noSalesReps) * 100;
+                if (noOfQtrs < 4) {
+                    if (percOfTargetRep >= 50) {
+                        System.out.printf("%nKeep up the GOOD work, %s. There is a " + "possible year-end bonus!%n\n", salesRep.substring(0, salesRep.indexOf(' ')));
+                    } else {
+                        System.out.printf("%nSo far sales are lagging behind projections.\n");
+                    }
+                }
 
-            //Captures quarter data in looping fasion
-//public static int chooseQtr()
+                percOfTargetCo = (annualSales / projectedSales) * 100;
+
+                System.out.printf("%nCORPORATE SALES PERFORMANCE\n");
+
+                if (percOfTargetCo >= 100) {
+                    System.out.printf("%nIt’s been a GOOD year so far. There could be a year-end bonus of about 2-5%% if we can keep on top of our sales goals. Thank you all and please continue your excellent effort!");
+                } else {
+                    System.out.printf("%nSales are lagging projections. A year-end bonus may not be possible.");
+                }
+            }
+
 
         }
-        while (true);
-        //Adding quarter sales to annual total
-        annualSales += quarterlySales;
-        ++qtrCounter;
-    }
-    //Print out sales rep sales numbers
-  System.out.printf("%nTANDEM ENTERPRISES");
-  System.out.printf("%nSALES REVENUE FOR %d QUARTER(S) OF %d",noOfQtrs,dateTime.get(dateTime.YEAR));
-  System.out.printf("%nSALES REP:  %s",salesRep);
-  System.out.printf("%n%nTotal Year-To-Date:      $%,19.2f%n",quarterlySales);
-    //Check if there could be a bonus or not
-    percOfTargetRep =quarterlySales /(projectedSales/noSalesReps)*100;
-    if(noOfQtrs< 4)
+        while (salesRepCtr < noSalesReps);
 
-    {
-        if (percOfTargetRep >= 50) {
-            System.out.printf("%nKeep up the GOOD work, %s. There is a " + "possible year-end bonus!%n\n", salesRep.substring(0, salesRep.indexOf(' ')));
-        } else {
-            System.out.printf("%nSo far sales are lagging behind projections.\n");
-        }
+
     }
 
 
-  while(salesRepCtr<noSalesReps);
     //Start of Corporate sale calculations
-    percOfTargetCo=(annualSales/projectedSales)*100;
-
-        System.out.printf("%nCORPORATE SALES PERFORMANCE\n");
-
-        if(percOfTargetCo>=100)
-
-    {
-        System.out.printf("%nIt’s been a GOOD year so far. There could be a year-end bonus of about 2-5%% if we can keep on top of our sales goals. Thank you all and please continue your excellent effort!");
-    }
-        else
-
-    {
-        System.out.printf("%nSales are lagging projections. A year-end bonus may not be possible.");
-    }
 
 
     public static void promptNoQtrs() {
@@ -116,30 +115,24 @@ public class BellowsGenzer006PA2 {
 
     public static int chooseQtr() {
         int qtrChosen;
-        while (qtrCounter <= noOfQtrs) {
 
-            //monthCounter = 1;
-            System.out.printf("%n1. First Quarter");
-            System.out.printf("%n2. Second Quarter");
-            System.out.printf("%n3. Third Quarter");
-            System.out.printf("%n4. Fourth Quarter");
-            System.out.printf("%n%nChoose the %squarter in which sales were earned: ", qtrCounter > 1 ? "next " : "");
-            qtrChoice = input.nextInt();
+        System.out.printf("%n1. First Quarter");
+        System.out.printf("%n2. Second Quarter");
+        System.out.printf("%n3. Third Quarter");
+        System.out.printf("%n4. Fourth Quarter");
+        System.out.printf("%n%nChoose the %squarter in which sales were earned: ", qtrCounter > 1 ? "next " : "");
+        qtrChosen = input.nextInt();
 
 
-
-            quarter = (qtrChoice == 1) ? "First Quarter" : (qtrChoice == 2) ? "Second Quarter" : (qtrChoice == 3) ? "Third Quarter" : "Fourth Quarter";
-
-        }
+        quarter = (qtrChosen == 1) ? "First Quarter" : (qtrChosen == 2) ? "Second Quarter" : (qtrChosen == 3) ? "Third Quarter" : "Fourth Quarter";
 
 
         return qtrChosen;
     }
 
 
-    public void determineMonthNo(int monthCounter)
-    {
-        switch(monthCounter){
+    public static void determineMonthNo(int monthCounter) {
+        switch (monthCounter) {
             case 1:
                 monthNo = "1st";
                 break;
@@ -149,16 +142,14 @@ public class BellowsGenzer006PA2 {
             case 3:
                 monthNo = "3rd";
                 break;
-    }
+        }
 
     }
+
     public static double promptSalesRevenue() {
         double salesRev;
         System.out.printf("%nEnter the sales revenue for the %s month of the %s: \n", monthNo, quarter);
         salesRevenue = input.nextDouble();
-        //Adding sales to quarter total
-        quarterlySales += salesRevenue;
-        ++monthCounter;
         return salesRev;
     }
 
